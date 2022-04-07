@@ -173,6 +173,18 @@ class MainViewController: NSViewController {
                     }
                     return
                 }
+                guard let resp = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                      self.resultLabel.stringValue = "发送失败:\(response.debugDescription)"
+                    }
+                    return
+                }
+                guard resp.statusCode == 200 else {
+                    DispatchQueue.main.async {
+                        self.resultLabel.stringValue = "发送失败:\(resp.statusCode)"
+                    }
+                    return
+                }
                 DispatchQueue.main.async {
                     self.resultLabel.stringValue = "发送成功"
                 }
